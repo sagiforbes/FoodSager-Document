@@ -607,8 +607,7 @@ Example of good response:
 ***oh*** : Auth of the user. From this point on the client should use this token in all its actions.
 ***portraitUrl***:  Url to the user’s portrait image. If no portrait was set by the user, server will send a default portrait image.
 
-[id]:api-user-login
-#### Login
+#### <a id="api-user-login"></a>Login
 ***No Token***
 *** Method ***: POST
 
