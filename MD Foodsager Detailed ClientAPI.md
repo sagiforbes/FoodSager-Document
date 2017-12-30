@@ -49,18 +49,18 @@ If the user sign up via Facebook, the client should ask the server for its [appl
 User can register via Facebook or Directly via Foodsager.
 **Foodsager login**
 When the user registers via Foodsager he's credentials and culture code, are stored locally (on the device). 
-When the user starts the application, it looks for the saved credentials. If they exists then the application try to login with the credentials (via [/api/user/login](api-user-login)).
+When the user starts the application, it looks for the saved credentials. If they exists then the application try to login with the credentials (via [/api/user/login](#api-user-login)).
 If the login fails (not due to network issues) then the application should display the login dialog. The login dialog should have the user's email filled in, and focus on the password.
 If there were network issues, the client should switch to offline mode (see relevant section).
 On success, the client gets an authentication token from Foodsager. 
 On success login the client should save the new email-password culture-code on device, for next time the application starts.
 ***Forgot password***
-If the user cannot remember his password he can ask to reset the password (via [/api/user/resetpwdcreate](api-user-resetpwdcreate)). 
+If the user cannot remember his password he can ask to reset the password (via [/api/user/resetpwdcreate](#api-user-resetpwdcreate)). 
 If called Foodsager's server will send an email with a link to reset the password.
 **Facebook login**
 The client should first make an API call ([/api/user/fbappid](#api-user-fbappid)) to fetch Foodsager's application id, at Facebook.
 Once it has the Facebook's appid, the client makes a federate login request to Facebook and gets Facebook's token.
-The client then uses the Facebook token to login to Foodsager (via [/api/user/fblogin](api-user-fblogin)). Foodsager will return a valid token of its own. 
+The client then uses the Facebook token to login to Foodsager (via [/api/user/fblogin](#api-user-fblogin)). Foodsager will return a valid token of its own. 
 
 ## Post login
 On success login, the client fetches the user settings (via [/api/user/settings](#api-user-settings)) to get his culture-code. 
