@@ -591,7 +591,7 @@ The payload has a single field call categories.
 ### User API
 These APIs manage users
 
-####<a id="api-user-signup"></a>Signup
+#### <a id="api-user-signup"></a>Signup
 ***No Token***
 
 ***Method***: POST
