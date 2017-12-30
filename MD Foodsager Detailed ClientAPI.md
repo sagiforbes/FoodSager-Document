@@ -424,8 +424,11 @@ The client should save the resources it got from resource API locally, so it can
 
 #### <a id="api-resource-recipe"></a>Resource for recipe
 No Token 
+
 ***Method***: GET
+
 ***Endpoint***: /api/resource/recipe
+
 **Response**:
 ``` javascript
 {
@@ -518,23 +521,38 @@ No Token
 ```
 The payload contains three fields: ingredients, directions and prepareTime.
 Follow is a detail of every field:
+
 ***ingredients***: An array of objects. Each object in the array contains:
+
 ***ingType***: Number, the ingredient type you should use when inserting a new ingredient.
+
 ***iconUrl***: Url to the icon representing the ingType. If not exists use the ingType to set the image according to the resource. If present (not null nor empty) use this URL to display the icon
+
 ***units***: Array of possible units available for this ingredient type. Each units item contains:
+
 ***unit***: String that symbolize the unit (g,Kg, ml etc.)
+
 ***amounts***: Array of floats representing possible values for this unit. When you display the float you should hide the fraction part of number, for instance a float value of 1.0 should be display as 1. 
 
+
 ***directions***: An array of objects, each object in the array contains:
+
 ***dirId***: integer representing the icon. This id is inserted in the direction array when editing recipe directions.
+
 ***image***: url to an image representing the direction.
-***prepareTime***: Array of strings. Each string contains the preparation time in the form of <days>:<hours>:<minutes>:<seconds>. For example, if a recipe takes two and a half hours to prepare then you get the value as: 0:2:30:0
+
+***prepareTime***: Array of strings. Each string contains the preparation time in the form of <days>:<hours>:<minutes>:<seconds>. For example, if a recipe takes two and a half hours to prepare then you get
+ the value as: 0:2:30:0
+
 
 #### <a id="api-resource-recipecategories"></a>Resource for Recipe Categories
 Token is optional but preferable so the label will be in the user’s cultureCode. If no token is given server will set the cultureCode base on the client IP. In any error determine the cultureCode of the request, server will use “en-US”.
 ***Method***: GET
+
 ***Endpoint***: /api/resource/recipecategories
+
 **Response**:
+
 ``` javascript
 {
   "ok": true,
@@ -565,7 +583,9 @@ Token is optional but preferable so the label will be in the user’s cultureCod
 ```
 The payload has a single field call categories.
 ***categories***: An array of object of:
+
 ***id***: An integer to be set for this category.
+
 ***lable***: Name of the category in the language set by the user's cultureCode.
 
 ### User API
@@ -573,9 +593,13 @@ These APIs manage users
 
 ####<a id="api-user-signup"></a>Signup
 ***No Token***
+
 ***Method***: POST
+
 ***Endpoint***: /api/user/signup
+
  **Request Parameters**:
+
 ```javascript
  {
    "e":"some@email.com",
@@ -586,11 +610,15 @@ These APIs manage users
 }
 ```
 ***cc***: Culture code of the user such as ‘en-US’,’he-IL’ etc.),
+
 ***h***: ”Hash code”, This should be a number (64 bit) that divides by 40641269. The client should
+
  generate a random number from 1000 to 100000 and multiply it by 40641269. the result should be send to the server. 
+
 **Description**: 
 This call signup a new user to the system. The client should make a double edit box to see that the user types in correct password. 
 You also need to set a hash code as explain in the parameter section.
+
 **Response**: 
 If the hash code could not be determined or if it’s incorrect you will BAD_REQUEST error.
 If something was wrong with the email, password you will get soft error with description of the problem in English.
@@ -604,11 +632,14 @@ Example of good response:
    }
 }
 ```
+
 ***oh*** : Auth of the user. From this point on the client should use this token in all its actions.
+
 ***portraitUrl***:  Url to the user’s portrait image. If no portrait was set by the user, server will send a default portrait image.
 
 #### <a id="api-user-login"></a>Login
 ***No Token***
+
 *** Method ***: POST
 
 *** Endpoint ***: /api/user/login
@@ -622,54 +653,78 @@ Example of good response:
 *** cc ***:culture code of the user such as ‘en-US’,’he-IL’ etc.)
 
 **Details**: Login the user to the server.	
+
 **Response**: If something was wrong with user/password you get BAD_REQUEST.
 If the user password were not found you get a soft error with a message like “Unknown username or password”.
 
+
 ***oh***: Authentication to be used on all calls regarding a user’s cookbook.
+
 ***portraitUrl***: A link to the user’s portrait.
 
 If all is well payload will contain JSON object with oh field that will hold the token the client should use for future interaction with the server.
 
 #### <a id="api-user-logout"></a>Logout
+
 ***Method***: POST
+
 ***Endpoint***: /api/user/logout
+
 **Parameters**: 
 
+
 **Details**: Will log out current user.
+
 **Response**: 
 You get success in any case.
 
 #### <a id="api-user-changepwd"></a>Changing Password
+
 ***Method***: PUT
+
 ***Endpoint***: /api/user/changepwd
+
 ***po***: old password
+
 ***pn***: new password
 
 **Description**: This will change the user’s password in the site
+
 **Response**:
 If all is OK you receive a new token from the system:
+
 ***oh***: new token to be used on all API calls from this point on.
 
 #### <a id="api-user-resetpwdcreate"></a>Create Reset Password 
 ***No Token***
+
 ***Method***: POST
+
 ***Endpoint***: /api/user/resetpwdcreate
+
 **Parameters**: 
+
 ***e***: user email address.
+
 ***cc***: culture code of the user such as ‘en-US’,’he-IL’ etc.
 
 **Details**: When a user forget his/her password he should press a forgot password in the client. He then redirect to a screen where he/she should type in his/her email address. That email address is sent to the server. The server sends an email message with a link to a reset password page.
+
 **Response**: 
 If the email is empty you get a BAD_REQUEST (400).
 If the email is unknown you get failure response with a msg.
 If the email address is valid you will get a success response with no payload. 
 
 ####<a id="api-user-fbappid"></a>Get FoodSager Facebook’s application id
- ***No Token***
+***No Token***
+
 ***Method***: GET
+
 ***Endpoint***: /api/user/fbappid
+
 ** Description**:
 To give credentials to FoodSager via Facebook (Hereafter FB), the clients needs FoodSager’s AppId on FB. You call this endpoint.
+
 **Response**:
 ```javascript
 {
@@ -683,34 +738,49 @@ To give credentials to FoodSager via Facebook (Hereafter FB), the clients needs 
 
 #### <a id="api-user-fblogin"></a> Login/Register Via Facebook
 ***No Token***
+
 ***Method***: POST
+
 ***Endpoint***: /api/user/fblogin
+
 **Parameters**: 
+
 ***fbid***: User’s facebook id.
+
 ***token***: The token the client got from FB after approving FoodSager application.
 
 **Description**: A user can sign up or login via FB. the client should have the SDK to login and auticating FoodSager by getting FoodSager’s Facebook’s id before login the user via FB. Once the client done with FB login process he gets the user’s Facebook ID and a token.
 The client then pass the FB id and the token to FoodSager server via this endpoint.
 If the user exists in the system (sync via email) then you will be logged in to FoodSager. If the user does not exists, it will be created and the client will receive a FoodSager’s token.
+
 **Response**:
+
 ***oh***- FoodSager auth to be used on future response.
+
 ***name***: The name of the user (as registered on FB).
+
 ***portraitUrl***: The url from FB for the user’s portrait.
 
 #### <a id="api-user-ping"></a>Ping
+
 ***Method***: GET
+
 ***Endpoint***: /api/user/ping
 
 **Description**: This method checks if FoodSager's token is valid.
+
 **Response**:
 Success if the token is valid.
 If The token is invalid you get the usual UNAUTHORIZED
 
 #### <a id="api-user-settings"></a>Settings
+
 ***Method***: GET
+
 ***Endpoint***: /api/user/settings
 
 **Description**: Get the user’s settings.
+
 **Response**:
 On success the payload contains:
 ``` javascript
@@ -728,40 +798,58 @@ On success the payload contains:
 }
 ```
 ***email*** Email address of the user
+
 ***isEmailVerified***: true if the user had verified this email address. If the user had verified the email address he cannot change it.
+
 ***name***: name of the user
+
 ***lang***: culture code of the user’s interface.
+
 ***portraitUrl***: A url to the user’s portrait.
+
 ***favoriteKitchen***: String holding the type of kitchen the user likes.
 
 #### <a id="api-user-settings-put"></a>Settings
+
 ***Method***: PUT
+
 ***Endpoint***: /api/user/settings
 
 **Parameters**: 
+
 ***email*** - (optional) A new email for the user. The server checks if the user had not verified the existing email address. If the user had not verified the email address and this email value is valid, then the new email address is set to the user.
+
 ***name***: (optional) A new name of the user.	
+
 ***lang***: (optional) A new language code.
+
 ***favoriteKitchen*** - (Optional) String holding the type of kitchen the user likes.
+
 **Description**: Set one or more field of the user’s settings.
+
 **Response**:
 On success you get success response with no payload.
 
 #### <a id="api-user-settings-post"></a>Settings
 **Method**: POST
+
 **Endpoint**: /api/user/settings
 **Consume**: multipart/form-data
 
 **Parameters**: 
 *file* - a file to upload to the server containing the portrait image of the user.
+
 **Description**: Set the user’s portrait image
+
 **Response**:
 
 #### <a id="api-user-balance"></a>Get user coin (deprecated)
 **Method**: GET
+
 **Endpoint**: /api/user/balance
 
 **Description**: Gets the user coin balance
+
 **Response**:
 *payload*:
  *coin* - The amount of coins in the user’s balance.
@@ -774,7 +862,9 @@ All search and hints results are in the same form as with /api/cookbook/list
 #### <a id="api-search-q"></a>Hints from user own cookbook
 **Method**: GET
 /api/search/q?t=<search term>
+
 **Description**: search user own cookbook.
+
 **Response**:
 ``` javascript
 {
@@ -791,7 +881,9 @@ payload contains hits field with an array of possible text
 #### <a id="api-search-qc"></a>Hints from community  cookbook
 **Method**: GET
 /api/search/qc?t=<search term>
+
 **Description**: Get hints from user own cookbook.
+
 **Response**:
 ``` javascript
 {
@@ -808,7 +900,9 @@ payload contains hits field with an array of possible text
 #### <a id="api-search-qa"></a>Hints from all cook books
 **Method**: GET
 /api/search/qa?t=<search term>
+
 **Description**: Get hints from community cook books.
+
 **Response**:
 ``` javascript
 {
